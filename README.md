@@ -1,6 +1,6 @@
-# Lost-Mechanics-Test
+# Lost Mechanics Test
 
-![GitHub top language](https://img.shields.io/github/languages/top/sboez/Lost-Mechanics-Test)  <img src="https://img.shields.io/badge/phaser-3.23-orange">
+![GitHub top language](https://img.shields.io/github/languages/top/sboez/Lost_Mechanics_Test)  <img src="https://img.shields.io/badge/phaser-3.23-orange">
 
 
 Technical test - Lost Mechanics Creative developer
@@ -22,4 +22,10 @@ npm install
 Run local server :
 ```
 npm start
+```
+
+
+Build your package :
+```
+npm run build
 ```

@@ -1,5 +1,6 @@
 const path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	entry: './src/scripts/main.js',
@@ -10,10 +11,15 @@ module.exports = {
 	performance: {
 		hints: false
 	},
-	plugins: [new HtmlWebpackPlugin()],
+	plugins: [
+		new HtmlWebpackPlugin(),
+    	new CopyWebpackPlugin({
+    		patterns: [{ from: 'src/assets', to: 'assets' }],
+	    }),
+	], 
 	devServer: {
 		contentBase: path.resolve(__dirname, 'dist'),
 	    port: 1234,
 		historyApiFallback: true
-	}
+	},
 };
