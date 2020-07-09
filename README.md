@@ -1,9 +1,9 @@
 # Lost-Mechanics-Test
 
-![GitHub top language](https://img.shields.io/github/languages/top/sboez/Lost-Mechanics-Test)
+![GitHub top language](https://img.shields.io/github/languages/top/sboez/Lost-Mechanics-Test)  <img src="https://img.shields.io/badge/phaser-3.23-orange">
 
 
-Technical test - Lost Mechanics Creactive developer
+Technical test - Lost Mechanics Creative developer
 
 
 ## To do
