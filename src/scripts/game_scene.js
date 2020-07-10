@@ -5,6 +5,7 @@ export default class GameScene extends Phaser.Scene {
         });
 
 		this.START = false;
+		this.TAP = false;
 	}
 
 	preload() {
@@ -25,6 +26,7 @@ export default class GameScene extends Phaser.Scene {
 		this.bricks = this.physics.add.group({
 			immovable: true
 		});
+
 		for (let i = 0; i < 7; ++i) {
 			for (let j = 0; j < 6; ++j) {
 				const brick = this.physics.add.sprite(100 + i * 100, 100 + j * 55, 'brick');
@@ -32,11 +34,10 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
-		this.cursors = this.input.keyboard.createCursorKeys();
-
 		this.player.setCollideWorldBounds(true);
 		this.ball.setCollideWorldBounds(true);
 		this.ball.setBounce(1, 1);
+		this.ball.setData('onPaddle', true);
 
 		this.physics.world.checkCollision.down = false;
 
@@ -44,29 +45,62 @@ export default class GameScene extends Phaser.Scene {
 
 		this.player.setImmovable(true);
 		this.physics.add.collider(this.ball, this.player, this.hitPlayer, null, this);
+
+		this.setControls();
+        this.setText();
 	}
 
-	/* Hide brick after collision 
-		Give ball velocity depending to the rd number value */
+	setControls() {
+		this.cursors = this.input.keyboard.createCursorKeys();
+
+		this.input.on('pointermove', pointer => {
+            this.player.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+
+            if (this.ball.getData('onPaddle')) this.ball.x = this.player.x;
+
+        }, this);
+
+        this.input.on('pointerup', pointer => {
+
+            if (this.ball.getData('onPaddle')) this.TAP = true;
+
+        }, this);
+	}
+
+	setText() {
+		this.startText = this.add.text(
+			this.physics.world.bounds.width / 2,
+			this.physics.world.bounds.height / 2,
+			'Press SPACE or TAP to Start',
+			{
+				fontFamily: 'Lucida Console, Courier, monospace',
+				fontSize: '35px',
+				fill: '#fff'
+			}
+		);
+		this.startText.setOrigin(0.5);
+	}
+
+	/* Hide brick after collision */
 	hitBrick(ball, brick) {
 		brick.disableBody(true, true);
-
-		if (this.ball.body.velocity.x === 0) {
-			let rdNum = Math.random();
-			if (rdNum >= 0.5) this.ball.body.setVelocityX(150);
-			else this.ball.body.setVelocityX(-150);
-		}
 	}
 
-	/* Increase the velocity of the ball after bounce
-		Set reverse ball direction compared to player */
+	/* Set reverse ball direction compared to player */
 	hitPlayer(ball, player) {
-		this.ball.setVelocityY(this.ball.body.velocity.y - 15);
+		let diff = 0;
 
-		const newVelocity = Math.abs(this.ball.body.velocity.x) + 15;
-
-		if (this.ball.x < this.player.x) this.ball.setVelocityX(-newVelocity);
-		else this.ball.setVelocityX(newVelocity);
+        if (this.ball.x < this.player.x)
+        {
+            diff = this.player.x - this.ball.x;
+            this.ball.setVelocityX(-10 * diff);
+        }
+        else if (this.ball.x > this.player.x)
+        {
+            diff = this.ball.x -this.player.x;
+            this.ball.setVelocityX(10 * diff);
+        }
+        else this.ball.setVelocityX(2 + Math.random() * 8);
 	}
 
 	update() {
@@ -77,11 +111,14 @@ export default class GameScene extends Phaser.Scene {
 
 		if (!this.START) {
 			this.ball.setX(this.player.x);
-			
-			if (this.cursors.space.isDown) {
+
+			if (this.cursors.space.isDown || this.TAP) {
 				this.START = true;
-				this.ball.setVelocityY(-200);
+				this.ball.setData('onPaddle', false);
+				this.ball.setVelocity(-75, -300);
+				this.startText.setVisible(false);
 			}
 		}
+
 	}
 }
