@@ -7,6 +7,7 @@ export default class GameScene extends Phaser.Scene {
 		this.START = false;
 		this.TAP = false;
 		this.score = 0;
+		this.lives = 3;
 	}
 
 	preload() {
@@ -51,13 +52,13 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setBall() {
-		this.ball = this.physics.add.sprite(400, 710, 'ball');
+		this.ball = this.physics.add.sprite(400, 700, 'ball');
 		this.ball.displayWidth = 20;
 		this.ball.displayHeight = 20;
 
 		this.ball.setCollideWorldBounds(true);
 		this.ball.setBounce(1, 1);
-		this.ball.setData('onPaddle', true);
+		this.ball.setData('onPlayer', true);
 	}
 
 	setControls() {
@@ -70,13 +71,13 @@ export default class GameScene extends Phaser.Scene {
             	this.physics.world.bounds.width - (this.player.displayWidth / 2)
             );
 
-            if (this.ball.getData('onPaddle')) this.ball.x = this.player.x;
+            if (this.ball.getData('onPlayer')) this.ball.x = this.player.x;
 
         }, this);
 
         this.input.on('pointerup', pointer => {
 
-            if (this.ball.getData('onPaddle')) this.TAP = true;
+            if (this.ball.getData('onPlayer')) this.TAP = true;
 
         }, this);
 	}
@@ -122,6 +123,34 @@ export default class GameScene extends Phaser.Scene {
         else this.ball.setVelocityX(2 + Math.random() * 8);
 	}
 
+	isGameOver(world) {
+		return this.ball.body.y > world.bounds.height;
+	}
+
+	isWon() {
+		return this.bricks.countActive() === 0;
+	}
+
+	gameOver() {
+		this.ball.body.visible = false;
+		console.log("GAME OVER");
+	}
+
+	resetBall() {
+		this.ball.setVelocity(0);
+        this.ball.setPosition(this.player.x, 700);
+        this.ball.setData('onPlayer', true);
+	}
+
+	reset() {
+		this.resetBall();
+		this.START = false;
+		this.TAP = false;
+		this.lives -= 1;
+		this.livesText.setText('Lives: ' + this.lives);
+		if (this.lives < 0) this.gameOver();
+	}
+
 	update() {
 		this.player.body.setVelocityX(0);
 
@@ -133,10 +162,16 @@ export default class GameScene extends Phaser.Scene {
 
 			if (this.cursors.space.isDown || this.TAP) {
 				this.START = true;
-				this.ball.setData('onPaddle', false);
+				this.ball.setData('onPlayer', false);
 				this.ball.setVelocity(-75, -300);
 				this.startText.setVisible(false);
 			}
 		}
+
+		if (this.isGameOver(this.physics.world)) {
+			this.reset();
+		} else if (this.isWon()) {
+			console.log("YOU WIN !");
+		} 
 	}
 }
