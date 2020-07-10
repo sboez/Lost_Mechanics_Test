@@ -15,8 +15,7 @@ export default class GameScene extends Phaser.Scene {
 
 	create() {
 		this.player = this.physics.add.sprite(400, 730, 'paddle');
-
-		this.player.displayWidth = 70;
+		this.player.displayWidth = 90;
 		this.player.displayHeight = 10;
 
 		this.ball = this.physics.add.sprite(400, 710, 'ball');
@@ -42,29 +41,39 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.world.checkCollision.down = false;
 
 		this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
+
+		this.player.setImmovable(true);
+		this.physics.add.collider(this.ball, this.player, this.hitPlayer, null, this);
 	}
 
+	/* Hide brick after collision 
+		Give ball velocity depending to the rd number value */
 	hitBrick(ball, brick) {
 		brick.disableBody(true, true);
 
 		if (this.ball.body.velocity.x === 0) {
-			let randNum = Math.random();
-			if (randNum >= 0.5) {
-				this.ball.body.setVelocityX(150);
-			} else {
-				this.ball.body.setVelocityX(-150);
-			}
+			let rdNum = Math.random();
+			if (rdNum >= 0.5) this.ball.body.setVelocityX(150);
+			else this.ball.body.setVelocityX(-150);
 		}
+	}
+
+	/* Increase the velocity of the ball after bounce
+		Set reverse ball direction compared to player */
+	hitPlayer(ball, player) {
+		this.ball.setVelocityY(this.ball.body.velocity.y - 15);
+
+		const newVelocity = Math.abs(this.ball.body.velocity.x) + 15;
+
+		if (this.ball.x < this.player.x) this.ball.setVelocityX(-newVelocity);
+		else this.ball.setVelocityX(newVelocity);
 	}
 
 	update() {
 		this.player.body.setVelocityX(0);
 
-		if (this.cursors.left.isDown) {
-			this.player.body.setVelocityX(-350);
-		} else if (this.cursors.right.isDown) {
-			this.player.body.setVelocityX(350);
-		}
+		if (this.cursors.left.isDown) this.player.body.setVelocityX(-350);
+		else if (this.cursors.right.isDown) this.player.body.setVelocityX(350);
 
 		if (!this.START) {
 			this.ball.setX(this.player.x);
