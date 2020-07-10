@@ -14,29 +14,47 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.player = this.physics.add.sprite(
-			400,
-			730,
-			'paddle',
-		);
+		this.player = this.physics.add.sprite(400, 730, 'paddle');
 
-		this.player.displayWidth = 50;
+		this.player.displayWidth = 70;
+		this.player.displayHeight = 10;
 
-		this.ball = this.physics.add.sprite(
-			400,
-			710,
-			'ball'
-		);
+		this.ball = this.physics.add.sprite(400, 710, 'ball');
+		this.ball.displayWidth = 20;
+		this.ball.displayHeight = 20;
 
-		this.bricks = this.physics.add.group();
+		this.bricks = this.physics.add.group({
+			immovable: true
+		});
 		for (let i = 0; i < 7; ++i) {
 			for (let j = 0; j < 6; ++j) {
-				let brick = this.physics.add.sprite(100 + i * 100, 100 + j * 55, 'brick');
+				const brick = this.physics.add.sprite(100 + i * 100, 100 + j * 55, 'brick');
 				this.bricks.add(brick);
 			}
 		}
 
 		this.cursors = this.input.keyboard.createCursorKeys();
+
+		this.player.setCollideWorldBounds(true);
+		this.ball.setCollideWorldBounds(true);
+		this.ball.setBounce(1, 1);
+
+		this.physics.world.checkCollision.down = false;
+
+		this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
+	}
+
+	hitBrick(ball, brick) {
+		brick.disableBody(true, true);
+
+		if (this.ball.body.velocity.x === 0) {
+			let randNum = Math.random();
+			if (randNum >= 0.5) {
+				this.ball.body.setVelocityX(150);
+			} else {
+				this.ball.body.setVelocityX(-150);
+			}
+		}
 	}
 
 	update() {
