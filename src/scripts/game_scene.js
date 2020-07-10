@@ -18,7 +18,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.add.image(0, 0, 'background').setOrigin(0).setScale(0.4);
+		this.add.image(0, 0, 'background').setOrigin(0).setScale(0.3);
 		this.setPlayer();
 		this.setBall();
 		this.setBricks();		
@@ -38,15 +38,15 @@ export default class GameScene extends Phaser.Scene {
 
 		for (let i = 0; i < 7; ++i) {
 			for (let j = 0; j < 6; ++j) {
-				const brick = this.physics.add.sprite(50 + i * 50, 150 + j * 35, 'brick').setOrigin(0).setScale(0.4);
+				const brick = this.physics.add.sprite(60 + i * 30, 150 + j * 20, 'brick').setOrigin(0).setScale(0.3);
 				this.bricks.add(brick);
 			}
 		}
 	}
 
 	setPlayer() {
-		this.player = this.physics.add.sprite(400, 730, 'paddle');
-		this.player.displayWidth = 90;
+		this.player = this.physics.add.sprite(400, 550, 'paddle');
+		this.player.displayWidth = 70;
 		this.player.displayHeight = 10;
 
 		this.player.setCollideWorldBounds(true);
@@ -54,9 +54,9 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setBall() {
-		this.ball = this.physics.add.sprite(400, 700, 'ball');
-		this.ball.displayWidth = 20;
-		this.ball.displayHeight = 20;
+		this.ball = this.physics.add.sprite(400, 520, 'ball');
+		this.ball.displayWidth = 12;
+		this.ball.displayHeight = 12;
 
 		this.ball.setCollideWorldBounds(true);
 		this.ball.setBounce(1, 1);
@@ -85,15 +85,15 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setText() {
-		this.scoreText = this.add.text(50, 16, 'Score: 0', { fontSize: '20px', fill: '#fff' });
-		this.livesText = this.add.text(300, 16, 'Lives: 3', { fontSize: '20px', fill: '#fff' });
+		this.scoreText = this.add.text(60, 16, 'Score: 0', { fontSize: '18px', fill: '#fff' });
+		this.livesText = this.add.text(180, 16, 'Lives: 3', { fontSize: '18px', fill: '#fff' });
 
 		this.startText = this.add.text(
 			this.physics.world.bounds.width / 2,
 			this.physics.world.bounds.height / 2,
 			'Press SPACE or TAP to Start',
 			{
-				fontSize: '24px',
+				fontSize: '18px',
 				fill: '#fff'
 			}
 		);
@@ -140,7 +140,7 @@ export default class GameScene extends Phaser.Scene {
 
 	resetBall() {
 		this.ball.setVelocity(0);
-        this.ball.setPosition(this.player.x, 700);
+        this.ball.setPosition(this.player.x, 500);
         this.ball.setData('onPlayer', true);
 	}
 

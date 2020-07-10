@@ -12,14 +12,17 @@ module.exports = {
 		hints: false
 	},
 	plugins: [
-		new HtmlWebpackPlugin(),
+		new HtmlWebpackPlugin({
+            template: './index.html'
+        }),
     	new CopyWebpackPlugin({
     		patterns: [{ from: 'src/assets', to: 'assets' }],
 	    }),
 	], 
 	devServer: {
 		contentBase: path.resolve(__dirname, 'dist'),
-	    port: 1234,
+		host: '192.168.1.11',
+	    port: 9000,
 		historyApiFallback: true
 	},
 };
