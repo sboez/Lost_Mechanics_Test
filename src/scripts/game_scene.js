@@ -6,6 +6,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.START = false;
 		this.TAP = false;
+		this.score = 0;
 	}
 
 	preload() {
@@ -15,46 +16,59 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.player = this.physics.add.sprite(400, 730, 'paddle');
-		this.player.displayWidth = 90;
-		this.player.displayHeight = 10;
-
-		this.ball = this.physics.add.sprite(400, 710, 'ball');
-		this.ball.displayWidth = 20;
-		this.ball.displayHeight = 20;
-
-		this.bricks = this.physics.add.group({
-			immovable: true
-		});
-
-		for (let i = 0; i < 7; ++i) {
-			for (let j = 0; j < 6; ++j) {
-				const brick = this.physics.add.sprite(100 + i * 100, 100 + j * 55, 'brick');
-				this.bricks.add(brick);
-			}
-		}
-
-		this.player.setCollideWorldBounds(true);
-		this.ball.setCollideWorldBounds(true);
-		this.ball.setBounce(1, 1);
-		this.ball.setData('onPaddle', true);
+		this.setPlayer();
+		this.setBall();
+		this.setBricks();		
 
 		this.physics.world.checkCollision.down = false;
-
 		this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
-
-		this.player.setImmovable(true);
 		this.physics.add.collider(this.ball, this.player, this.hitPlayer, null, this);
 
 		this.setControls();
         this.setText();
 	}
 
+	setBricks() {
+		this.bricks = this.physics.add.group({
+			immovable: true
+		});
+
+		for (let i = 0; i < 7; ++i) {
+			for (let j = 0; j < 6; ++j) {
+				const brick = this.physics.add.sprite(100 + i * 100, 150 + j * 55, 'brick');
+				this.bricks.add(brick);
+			}
+		}
+	}
+
+	setPlayer() {
+		this.player = this.physics.add.sprite(400, 730, 'paddle');
+		this.player.displayWidth = 90;
+		this.player.displayHeight = 10;
+
+		this.player.setCollideWorldBounds(true);
+		this.player.setImmovable(true);
+	}
+
+	setBall() {
+		this.ball = this.physics.add.sprite(400, 710, 'ball');
+		this.ball.displayWidth = 20;
+		this.ball.displayHeight = 20;
+
+		this.ball.setCollideWorldBounds(true);
+		this.ball.setBounce(1, 1);
+		this.ball.setData('onPaddle', true);
+	}
+
 	setControls() {
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.input.on('pointermove', pointer => {
-            this.player.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+            this.player.x = Phaser.Math.Clamp(
+            	pointer.x,
+            	50,
+            	this.physics.world.bounds.width - (this.player.displayWidth / 2)
+            );
 
             if (this.ball.getData('onPaddle')) this.ball.x = this.player.x;
 
@@ -68,12 +82,14 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setText() {
+		this.scoreText = this.add.text(50, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+		this.livesText = this.add.text(600, 16, 'Lives: 3', { fontSize: '32px', fill: '#fff' });
+
 		this.startText = this.add.text(
 			this.physics.world.bounds.width / 2,
 			this.physics.world.bounds.height / 2,
 			'Press SPACE or TAP to Start',
 			{
-				fontFamily: 'Lucida Console, Courier, monospace',
 				fontSize: '35px',
 				fill: '#fff'
 			}
@@ -81,9 +97,12 @@ export default class GameScene extends Phaser.Scene {
 		this.startText.setOrigin(0.5);
 	}
 
-	/* Hide brick after collision */
+	/* Hide brick after collision, a brick give 20 score pts */
 	hitBrick(ball, brick) {
 		brick.disableBody(true, true);
+
+		this.score += 20;
+	    this.scoreText.setText('Score: ' + this.score);
 	}
 
 	/* Set reverse ball direction compared to player */
@@ -106,8 +125,8 @@ export default class GameScene extends Phaser.Scene {
 	update() {
 		this.player.body.setVelocityX(0);
 
-		if (this.cursors.left.isDown) this.player.body.setVelocityX(-350);
-		else if (this.cursors.right.isDown) this.player.body.setVelocityX(350);
+		if (this.cursors.left.isDown) this.player.body.setVelocityX(-500);
+		else if (this.cursors.right.isDown) this.player.body.setVelocityX(500);
 
 		if (!this.START) {
 			this.ball.setX(this.player.x);
@@ -119,6 +138,5 @@ export default class GameScene extends Phaser.Scene {
 				this.startText.setVisible(false);
 			}
 		}
-
 	}
 }
