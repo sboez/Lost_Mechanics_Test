@@ -11,12 +11,14 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	preload() {
+		this.load.image('background', 'assets/Courts/training_court.png');
 		this.load.image('ball', 'assets/Game/ball.png');
 		this.load.image('paddle', 'assets/Game/baton.png');
 		this.load.image('brick', 'assets/Game/brique-bleu.png');
 	}
 
 	create() {
+		this.add.image(0, 0, 'background').setOrigin(0).setScale(0.4);
 		this.setPlayer();
 		this.setBall();
 		this.setBricks();		
@@ -36,7 +38,7 @@ export default class GameScene extends Phaser.Scene {
 
 		for (let i = 0; i < 7; ++i) {
 			for (let j = 0; j < 6; ++j) {
-				const brick = this.physics.add.sprite(100 + i * 100, 150 + j * 55, 'brick');
+				const brick = this.physics.add.sprite(50 + i * 50, 150 + j * 35, 'brick').setOrigin(0).setScale(0.4);
 				this.bricks.add(brick);
 			}
 		}
@@ -83,15 +85,15 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setText() {
-		this.scoreText = this.add.text(50, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
-		this.livesText = this.add.text(600, 16, 'Lives: 3', { fontSize: '32px', fill: '#fff' });
+		this.scoreText = this.add.text(50, 16, 'Score: 0', { fontSize: '20px', fill: '#fff' });
+		this.livesText = this.add.text(300, 16, 'Lives: 3', { fontSize: '20px', fill: '#fff' });
 
 		this.startText = this.add.text(
 			this.physics.world.bounds.width / 2,
 			this.physics.world.bounds.height / 2,
 			'Press SPACE or TAP to Start',
 			{
-				fontSize: '35px',
+				fontSize: '24px',
 				fill: '#fff'
 			}
 		);
@@ -113,12 +115,12 @@ export default class GameScene extends Phaser.Scene {
         if (this.ball.x < this.player.x)
         {
             diff = this.player.x - this.ball.x;
-            this.ball.setVelocityX(-10 * diff);
+            this.ball.setVelocityX(-5 * diff);
         }
         else if (this.ball.x > this.player.x)
         {
             diff = this.ball.x -this.player.x;
-            this.ball.setVelocityX(10 * diff);
+            this.ball.setVelocityX(5 * diff);
         }
         else this.ball.setVelocityX(2 + Math.random() * 8);
 	}
