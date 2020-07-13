@@ -1,11 +1,11 @@
 export default class GameScene extends Phaser.Scene {
 	constructor() {
-		super({
-            key: 'GameScene'
-        });
+		super({ key: 'GameScene' });
 
 		this.START = false;
 		this.TAP = false;
+		this.WINNER = false;
+		this.LOOSER = false;
 		this.score = 0;
 		this.lives = 3;
 	}
@@ -133,11 +133,6 @@ export default class GameScene extends Phaser.Scene {
 		return this.bricks.countActive() === 0;
 	}
 
-	gameOver() {
-		this.ball.body.visible = false;
-		console.log("GAME OVER");
-	}
-
 	resetBall() {
 		this.ball.setVelocity(0);
         this.ball.setPosition(this.player.x, 500);
@@ -151,6 +146,11 @@ export default class GameScene extends Phaser.Scene {
 		this.lives -= 1;
 		this.livesText.setText('Lives: ' + this.lives);
 		if (this.lives < 0) this.gameOver();
+	}
+
+	gameOver() {
+		this.LOOSER = true;
+		this.scene.start('EndScene');
 	}
 
 	update() {
@@ -174,6 +174,8 @@ export default class GameScene extends Phaser.Scene {
 			this.reset();
 		} else if (this.isWon()) {
 			console.log("YOU WIN !");
+			this.WINNER = true;
+			this.scene.start('EndScene');
 		} 
 	}
 }

@@ -1,6 +1,7 @@
 import phaser from 'phaser'
-import GameScene from './game_scene';
 import TitleScene from './title_scene';
+import GameScene from './game_scene';
+import EndScene from './end_scene';
 
 const config = {
 	type : Phaser.AUTO,
@@ -11,6 +12,9 @@ const config = {
 		width : 328,
 		height : 600
 	},
+	dom: {
+        createContainer: true
+    },
 	physics : {
 		default : 'arcade',
 		arcade : {
@@ -19,7 +23,8 @@ const config = {
 	},
 	scene : [
 		TitleScene,
-		GameScene
+		GameScene,
+		EndScene
 	],
 };
 
