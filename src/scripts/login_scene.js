@@ -1,5 +1,3 @@
-import Button from 'phaser3-rex-plugins/plugins/button.js';
-
 export default class LoginScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'LoginScene' });
@@ -31,10 +29,10 @@ export default class LoginScene extends Phaser.Scene {
 		const button = this.add.image(this.physics.world.bounds.width / 2, 350, 'button', this, 2, 1, 0)
 		.setScale(0.8)
 		.setInteractive({ useHandCursor: true })
-	    .on('pointerdown', () => this.btnOk.setStyle({ fill: '#0ff' }) )
-		.on('pointerup', e => {
-	        this.scene.start('GameScene');
-	    });
+	    .on('pointerover', e => this.btnOk.setStyle({ fill: '#000' }))
+	    .on('pointerout', e => this.btnOk.setStyle({ fill: '#fff' }))
+	    .on('pointerdown', e => this.btnOk.setStyle({ fill: '#0ff' }))
+		.on('pointerup', e => this.scene.start('GameScene'));
 
 		this.btnOk = this.add.text(this.physics.world.bounds.width / 2 - 10, 340, "OK");
 	}
