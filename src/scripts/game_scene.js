@@ -17,6 +17,10 @@ export default class GameScene extends Phaser.Scene {
 		this.load.image('brick', 'assets/Game/brique-bleu.png');
 	}
 
+	init(data) {
+	    this.yourName = data.name;
+	}
+
 	create() {
 		this.add.image(0, 0, 'background').setOrigin(0).setScale(0.3);
 		this.setPlayer();
@@ -150,7 +154,7 @@ export default class GameScene extends Phaser.Scene {
 
 	gameOver() {
 		this.LOOSER = true;
-		this.scene.start('EndScene');
+		this.scene.start('EndScene', { win: this.WINNER, loose: this.LOOSER, name: this.yourName });
 	}
 
 	update() {
@@ -170,12 +174,10 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
-		if (this.isGameOver(this.physics.world)) {
-			this.reset();
-		} else if (this.isWon()) {
-			console.log("YOU WIN !");
+		if (this.isGameOver(this.physics.world)) this.reset();
+		else if (this.isWon()) {
 			this.WINNER = true;
-			this.scene.start('EndScene');
+			this.scene.start('EndScene', { win: this.WINNER, loose: this.LOOSER, name: this.yourName });
 		} 
 	}
 }
