@@ -33,7 +33,7 @@ export default class TitleScene extends Phaser.Scene {
 	    });
 
 	    startBtn.on('pointerup', e => {
-	        this.scene.start('GameScene');
+	        this.scene.start('LoginScene');
 	    });
 	}
 }
