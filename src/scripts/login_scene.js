@@ -33,14 +33,14 @@ export default class LoginScene extends Phaser.Scene {
 
 		this.yourName = this.inputText.text;
 
-		new Button(this, this.cameras.main.centerX, this.cameras.main.centerY + 120, 'buttons', 0, 1, 2)
-		.on('pointerup', this.checkName, this);
+		const button = new Button(this, 0, 0, 'buttons', 0, 1, 2).on('pointerup', this.checkName, this);
+		const label = this.add.text(0, 0, "OK",
+		{
+			fontFamily: 'myFont', 
+			fontSize: 24
+		}).setOrigin(0.5);
 
-		this.add.text(this.cameras.main.centerX - 10, this.cameras.main.centerY + 110, "OK",
-			{ 
-				fontFamily: 'myFont', 
-				fontSize: 24 
-			});
+		const container = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
 	}
 
 	checkName() {
