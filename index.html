@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Lost Mechanics - Technical test</title>
+		<title>Lost Mechanics - technical test</title>
 		<meta charset = UTF-8>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<style>
 			body {
-				margin: 0px; overflow: hidden;
+				height: 100%; margin: 0px; padding: 0px; overflow: hidden;
+			}
+			@font-face {
+				font-family: myFont;
+				src: url('assets/Font/VT323-Regular.ttf');
+				font-weight: 400;
+				font-weight: normal;
 			}
 		</style>
 	</head>
 	<body>
+		<div style="font-family:'myFont'; position:absolute; left:-1000px; visibility:hidden;">.</div>
 		<script src="./dist/main.js"></script>
 	</body>
 </html>

@@ -86,19 +86,34 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setText() {
-		this.scoreText = this.add.text(60, 16, 'Score: 0', { fontSize: '18px', fill: '#fff' });
-		this.livesText = this.add.text(180, 16, 'Lives: 3', { fontSize: '18px', fill: '#fff' });
+		this.scoreText = this.add.text(60, 16, 'Score: 0', 
+			{ 
+				align: 'center', 
+				fontFamily: 'myFont', 
+				fontSize: '24px', 
+				fill: '#000' 
+			});
+
+		this.livesText = this.add.text(180, 16, 'Lives: 3', 
+			{ 
+				align: 'center', 
+				fontFamily: 'myFont', 
+				fontSize: '24px', 
+				fill: '#000' 
+			});
 
 		this.startText = this.add.text(
 			this.physics.world.bounds.width / 2,
 			this.physics.world.bounds.height / 2,
 			'Press SPACE or TAP to Start',
 			{
-				fontSize: '18px',
-				fill: '#fff'
-			}
-		);
-		this.startText.setOrigin(0.5);
+				align: 'center', 
+				fontFamily: 'myFont',
+				fontSize: '24px',
+				fill: '#000'
+			})
+		.setOrigin(0.5);
+
 	}
 
 	/* Hide brick after collision, a brick give 20 score pts */

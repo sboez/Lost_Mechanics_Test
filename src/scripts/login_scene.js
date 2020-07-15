@@ -6,7 +6,12 @@ export default class LoginScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.add.text(30, 200, "Please tap your name to play");
+		this.add.text(30, 200, "Please put your name to play",
+			{ 
+				align: 'center', 
+				fontFamily: 'myFont', 
+				fontSize: 24
+			});
 
 		this.inputText = this.add.rexInputText(this.cameras.main.centerX, this.cameras.main.centerY, 10, 10, {
 			type: 'textarea',
@@ -28,7 +33,11 @@ export default class LoginScene extends Phaser.Scene {
 		new Button(this, this.cameras.main.centerX, this.cameras.main.centerY + 120, 'buttons', 0, 1, 2)
 		.on('pointerup', this.checkName, this);
 
-		this.add.text(this.cameras.main.centerX - 10, this.cameras.main.centerY + 112, "OK");
+		this.add.text(this.cameras.main.centerX - 10, this.cameras.main.centerY + 110, "OK",
+			{ 
+				fontFamily: 'myFont', 
+				fontSize: 24 
+			});
 	}
 
 	checkName() {

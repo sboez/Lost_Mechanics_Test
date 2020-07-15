@@ -16,7 +16,11 @@ export default class TitleScene extends Phaser.Scene {
 		new Button(this, this.cameras.main.centerX, this.cameras.main.centerY + 120, 'buttons', 0, 1, 2)
 		.on('pointerup', this.onPressed, this);
 
-		this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY + 112, "START");
+		this.add.text(this.cameras.main.centerX - 24, this.cameras.main.centerY + 110, "START", 
+			{ 
+				fontFamily: 'myFont', 
+				fontSize: 24 
+			});
 	}
 
 	onPressed() {
