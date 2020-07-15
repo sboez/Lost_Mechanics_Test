@@ -23,7 +23,7 @@ const config = {
             plugin: InputTextPlugin,
             start: true
         }]
-    },
+    }, 
 	physics : {
 		default : 'arcade',
 		arcade : {

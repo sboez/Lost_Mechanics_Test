@@ -2,8 +2,6 @@ export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'GameScene' });
 
-		this.START = false;
-		this.TAP = false;
 		this.WINNER = false;
 		this.LOOSER = false;
 	}
@@ -20,6 +18,8 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+		this.START = false;
+		this.TAP = false;
 		this.score = 0;
 		this.lives = 3;
 
@@ -74,7 +74,7 @@ export default class GameScene extends Phaser.Scene {
 		this.input.on('pointermove', pointer => {
 			this.player.x = Phaser.Math.Clamp(
 			pointer.x,
-			50,
+			35,
 			this.physics.world.bounds.width - (this.player.displayWidth / 2));
 
 			if (this.ball.getData('onPlayer')) this.ball.x = this.player.x;
@@ -175,6 +175,6 @@ export default class GameScene extends Phaser.Scene {
 		else if (this.isWon()) {
 			this.WINNER = true;
 			this.scene.start('EndScene', { win: this.WINNER, loose: this.LOOSER, name: this.yourName });
-		} 
+		};
 	}
 }
