@@ -13,14 +13,15 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-            template: './index.html'
-        }),
-    	new CopyWebpackPlugin({
-    		patterns: [{ from: 'src/assets', to: 'assets' }],
-	    }),
+			template: './index.html'
+		}),
+		new CopyWebpackPlugin({
+			patterns: [{ from: 'src/assets', to: 'assets' }],
+		}),
 	], 
 	devServer: {
 		contentBase: path.resolve(__dirname, 'dist'),
+		host: '192.168.1.11',
 	    port: 9000,
 		historyApiFallback: true
 	},

@@ -1,10 +1,8 @@
+import { Button } from './button';
+
 export default class LoginScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'LoginScene' });
-	}
-
-	preload () {
-		this.load.image('button','assets/Game/yes.png');
 	}
 
 	create() {
@@ -27,15 +25,10 @@ export default class LoginScene extends Phaser.Scene {
 
 		this.yourName = this.inputText.text;
 
-		const button = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + 50, 'button', this, 2, 1, 0)
-		.setScale(0.8)
-		.setInteractive({ useHandCursor: true })
-		.on('pointerover', e => this.btnOk.setStyle({ fill: '#000' }))
-		.on('pointerout', e => this.btnOk.setStyle({ fill: '#fff' }))
-		.on('pointerdown', e => this.btnOk.setStyle({ fill: '#0ff' }))
-		.on('pointerup', e => this.checkName());
+		new Button(this, this.cameras.main.centerX, this.cameras.main.centerY + 120, 'buttons', 0, 1, 2)
+		.on('pointerup', this.checkName, this);
 
-		this.btnOk = this.add.text(this.cameras.main.centerX - 10, 340, "OK");
+		this.add.text(this.cameras.main.centerX - 10, this.cameras.main.centerY + 112, "OK");
 	}
 
 	checkName() {

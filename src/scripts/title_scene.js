@@ -1,3 +1,5 @@
+import { Button } from './button';
+
 export default class TitleScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'TitleScene' });
@@ -5,24 +7,19 @@ export default class TitleScene extends Phaser.Scene {
 
 	preload() {
 		this.load.image('logo', 'assets/Game/logo.png');
-		this.load.image('btn', 'assets/Game/yes.png');
-		this.load.image('hover_btn', 'assets/Game/yes_hover.png');
+		this.load.spritesheet("buttons", "assets/Game/spritesheet.png", { frameWidth: 115, frameHeight: 42 });
 	}
 
 	create() {
 		this.add.image(this.cameras.main.centerX, 200, 'logo');
 
-		this.setButton();
+		new Button(this, this.cameras.main.centerX, this.cameras.main.centerY + 120, 'buttons', 0, 1, 2)
+		.on('pointerup', this.onPressed, this);
 
-		this.start = this.add.text(this.cameras.main.centerX - 25, this.cameras.main.centerY + 42, "START");
+		this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY + 112, "START");
 	}
 
-	setButton() {
-		const startBtn = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + 50, 'btn')
-		.setInteractive({ useHandCursor: true })
-		.on('pointerover', e => this.start.setStyle({ fill: '#000' }))
-		.on('pointerout', e => this.start.setStyle({ fill: '#fff' }))
-		.on('pointerdown', e => this.start.setStyle({ fill: '#0ff' }))
-		.on('pointerup', e => this.scene.start('LoginScene'));
+	onPressed() {
+		this.scene.start('LoginScene');
 	}
 }

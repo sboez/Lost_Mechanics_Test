@@ -1,4 +1,4 @@
-import LoginScene from './login_scene';
+import { Button } from './button';
 
 export default class EndScene extends Phaser.Scene {
 	constructor() {
@@ -13,16 +13,15 @@ export default class EndScene extends Phaser.Scene {
 
 	create() {
 		this.WINNER ? this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, "BRAVO \n" + this.yourName, { align: 'center' })
-					: this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, "DOMMAGE \n" + this.yourName, { align: 'center' });
+					: this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, "DAMAGE \n" + this.yourName, { align: 'center' });
 
-		const button = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + 50, 'button', this, 2, 1, 0)
-			.setScale(0.8)
-			.setInteractive({ useHandCursor: true })
-			.on('pointerover', e => this.btnRetry.setStyle({ fill: '#000' }))
-			.on('pointerout', e => this.btnRetry.setStyle({ fill: '#fff' }))
-			.on('pointerdown', e => this.btnRetry.setStyle({ fill: '#0ff' }))
-			.on('pointerup', e => this.scene.restart('GameScene', { name: this.yourName }));
+		new Button(this, this.cameras.main.centerX, this.cameras.main.centerY + 120, 'buttons', 0, 1, 2)
+		.on('pointerup', this.onPressed, this);
 
-			this.btnRetry = this.add.text(this.cameras.main.centerX - 10, this.cameras.main.centerY + 42, "RETRY");
+		this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY + 112, "RETRY");
+	}
+
+	onPressed() {
+		this.scene.start('GameScene', { name: this.yourName });
 	}
 }

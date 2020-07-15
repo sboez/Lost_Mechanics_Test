@@ -6,8 +6,6 @@ export default class GameScene extends Phaser.Scene {
 		this.TAP = false;
 		this.WINNER = false;
 		this.LOOSER = false;
-		this.score = 0;
-		this.lives = 3;
 	}
 
 	preload() {
@@ -22,7 +20,8 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.registry.set('retry', false);
+		this.score = 0;
+		this.lives = 3;
 
 		this.add.image(0, 0, 'background').setOrigin(0).setScale(0.3);
 		this.setPlayer();
@@ -148,15 +147,6 @@ export default class GameScene extends Phaser.Scene {
 		this.lives -= 1;
 		this.livesText.setText('Lives: ' + this.lives);
 		if (this.lives < 0) this.gameOver();
-	}
-
-	retry() {
-		console.log("retry was called!");
-		this.resetBall();
-		this.START = false;
-		this.TAP = false;
-		this.score = 0;
-		this.lives = 0;
 	}
 
 	gameOver() {
