@@ -56,6 +56,7 @@ export default class EndScene extends Phaser.Scene {
 	}
 
 	onPressed() {
+		this.WINNER ? this.winnerSound.stop() : this.looserSound.stop();
 		this.clickSound.play();
 		this.scene.start('GameScene', { name: this.yourName });
 	}

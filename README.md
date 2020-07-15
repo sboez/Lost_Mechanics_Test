@@ -11,6 +11,15 @@ Technical test - Lost Mechanics Creative developer
 Make a bricks breaker game level inspired by [this one](https://gaming.wimbledon.com/)
 
 
+## Challenges
+
+**Phaser :** It's the first time I'm working with this Framework. It was very fun, intuitive for the gameplay, most challeging for update variables because each scene is independent.
+
+
+## Assets
+
+:loud_sound: 8-Bit sounds are pick up on [OpenGameArt](https://opengameart.org/)
+
 
 ## Usage
 

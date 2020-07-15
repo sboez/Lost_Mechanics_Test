@@ -7,7 +7,7 @@ export default class LoginScene extends Phaser.Scene {
 
 	create() {
 		this.clickSound = this.sound.add('soundMenu');
-		
+
 		this.add.text(30, 200, "Please put your name to play",
 			{ 
 				align: 'center', 
@@ -26,6 +26,7 @@ export default class LoginScene extends Phaser.Scene {
 		})
 		.resize(200, 40)
 		.selectText()
+		.setBlur()
 		.on('textchange', inputText => {
 			this.yourName = this.inputText.text;
 		});
