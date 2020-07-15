@@ -18,21 +18,23 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	init(data) {
-	    this.yourName = data.name;
+		this.yourName = data.name;
 	}
 
 	create() {
+		this.registry.set('retry', false);
+
 		this.add.image(0, 0, 'background').setOrigin(0).setScale(0.3);
 		this.setPlayer();
 		this.setBall();
-		this.setBricks();		
+		this.setBricks();
 
 		this.physics.world.checkCollision.down = false;
 		this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
 		this.physics.add.collider(this.ball, this.player, this.hitPlayer, null, this);
 
 		this.setControls();
-        this.setText();
+		this.setText();
 	}
 
 	setBricks() {
@@ -71,21 +73,17 @@ export default class GameScene extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.input.on('pointermove', pointer => {
-            this.player.x = Phaser.Math.Clamp(
-            	pointer.x,
-            	50,
-            	this.physics.world.bounds.width - (this.player.displayWidth / 2)
-            );
+			this.player.x = Phaser.Math.Clamp(
+			pointer.x,
+			50,
+			this.physics.world.bounds.width - (this.player.displayWidth / 2));
 
-            if (this.ball.getData('onPlayer')) this.ball.x = this.player.x;
+			if (this.ball.getData('onPlayer')) this.ball.x = this.player.x;
+		}, this);
 
-        }, this);
-
-        this.input.on('pointerup', pointer => {
-
-            if (this.ball.getData('onPlayer')) this.TAP = true;
-
-        }, this);
+		this.input.on('pointerup', pointer => {
+			if (this.ball.getData('onPlayer')) this.TAP = true;
+		}, this);
 	}
 
 	setText() {
@@ -109,24 +107,24 @@ export default class GameScene extends Phaser.Scene {
 		brick.disableBody(true, true);
 
 		this.score += 20;
-	    this.scoreText.setText('Score: ' + this.score);
+		this.scoreText.setText('Score: ' + this.score);
 	}
 
 	/* Set reverse ball direction compared to player */
 	hitPlayer(ball, player) {
 		let diff = 0;
 
-        if (this.ball.x < this.player.x)
-        {
-            diff = this.player.x - this.ball.x;
-            this.ball.setVelocityX(-5 * diff);
-        }
-        else if (this.ball.x > this.player.x)
-        {
-            diff = this.ball.x -this.player.x;
-            this.ball.setVelocityX(5 * diff);
-        }
-        else this.ball.setVelocityX(2 + Math.random() * 8);
+		if (this.ball.x < this.player.x)
+		{
+			diff = this.player.x - this.ball.x;
+			this.ball.setVelocityX(-5 * diff);
+		}
+		else if (this.ball.x > this.player.x)
+		{
+			diff = this.ball.x -this.player.x;
+			this.ball.setVelocityX(5 * diff);
+		}
+		else this.ball.setVelocityX(2 + Math.random() * 8);
 	}
 
 	isGameOver(world) {
@@ -139,8 +137,8 @@ export default class GameScene extends Phaser.Scene {
 
 	resetBall() {
 		this.ball.setVelocity(0);
-        this.ball.setPosition(this.player.x, 500);
-        this.ball.setData('onPlayer', true);
+		this.ball.setPosition(this.player.x, 520);
+		this.ball.setData('onPlayer', true);
 	}
 
 	reset() {
@@ -150,6 +148,15 @@ export default class GameScene extends Phaser.Scene {
 		this.lives -= 1;
 		this.livesText.setText('Lives: ' + this.lives);
 		if (this.lives < 0) this.gameOver();
+	}
+
+	retry() {
+		console.log("retry was called!");
+		this.resetBall();
+		this.START = false;
+		this.TAP = false;
+		this.score = 0;
+		this.lives = 0;
 	}
 
 	gameOver() {
