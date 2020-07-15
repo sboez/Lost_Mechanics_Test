@@ -1,16 +1,16 @@
 export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'GameScene' });
-
-		this.WINNER = false;
-		this.LOOSER = false;
 	}
 
 	preload() {
-		this.load.image('background', 'assets/Courts/training_court.png');
+		this.load.image('background', 'assets/Game/training_court.png');
 		this.load.image('ball', 'assets/Game/ball.png');
 		this.load.image('paddle', 'assets/Game/baton.png');
 		this.load.image('brick', 'assets/Game/brique-bleu.png');
+		this.load.audio('hit', [ "assets/Sounds/Hit.mp3" ]);
+		this.load.audio('shoot', [ "assets/Sounds/Shoot.mp3" ]);
+		this.load.audio('dead', [ "assets/Sounds/Explosion.mp3" ]);
 	}
 
 	init(data) {
@@ -18,8 +18,14 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+		this.hitSound = this.sound.add('hit');
+		this.shootSound = this.sound.add('shoot');
+		this.deadSound = this.sound.add('dead');
+
 		this.START = false;
 		this.TAP = false;
+		this.WINNER = false;
+		this.LOOSER = false;
 		this.score = 0;
 		this.lives = 3;
 
@@ -118,6 +124,8 @@ export default class GameScene extends Phaser.Scene {
 
 	/* Hide brick after collision, a brick give 20 score pts */
 	hitBrick(ball, brick) {
+		this.hitSound.play();
+
 		brick.disableBody(true, true);
 
 		this.score += 20;
@@ -126,6 +134,8 @@ export default class GameScene extends Phaser.Scene {
 
 	/* Set reverse ball direction compared to player */
 	hitPlayer(ball, player) {
+		this.shootSound.play();
+
 		let diff = 0;
 
 		if (this.ball.x < this.player.x)
@@ -156,17 +166,20 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	reset() {
+		this.deadSound.play();
 		this.resetBall();
+
 		this.START = false;
 		this.TAP = false;
 		this.lives -= 1;
 		this.livesText.setText('Lives: ' + this.lives);
+
 		if (this.lives < 0) this.gameOver();
 	}
 
 	gameOver() {
 		this.LOOSER = true;
-		this.scene.start('EndScene', { win: this.WINNER, loose: this.LOOSER, name: this.yourName });
+		this.scene.start('EndScene', { win: this.WINNER, lose: this.LOOSER, name: this.yourName });
 	}
 
 	update() {
@@ -189,7 +202,7 @@ export default class GameScene extends Phaser.Scene {
 		if (this.isGameOver(this.physics.world)) this.reset();
 		else if (this.isWon()) {
 			this.WINNER = true;
-			this.scene.start('EndScene', { win: this.WINNER, loose: this.LOOSER, name: this.yourName });
+			this.scene.start('EndScene', { win: this.WINNER, lose: this.LOOSER, name: this.yourName });
 		};
 	}
 }

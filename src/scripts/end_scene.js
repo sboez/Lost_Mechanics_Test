@@ -7,12 +7,23 @@ export default class EndScene extends Phaser.Scene {
 
 	init(data) {
 		this.WINNER = data.win;
-		this.LOOSER = data.loose;
+		this.LOOSER = data.lose;
 		this.yourName = data.name;
 	}
 
+	preload() {
+		this.load.audio('winner', [ "assets/Sounds/Jingle_Achievement.mp3" ]);
+		this.load.audio('looser', [ "assets/Sounds/Jingle_Lose.mp3" ]);
+	}
+
 	create() {
-		if (this.WINNER)
+		this.winnerSound = this.sound.add('winner');
+		this.looserSound = this.sound.add('looser');
+		this.clickSound = this.sound.add('soundMenu');
+
+		if (this.WINNER) {
+			this.winnerSound.play();
+
 			this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, 
 				"BRAVO \n" + this.yourName, 
 				{ 
@@ -20,7 +31,11 @@ export default class EndScene extends Phaser.Scene {
 					fontFamily: 'myFont', 
 					fontSize: 24 
 				});
-		else
+		}
+
+		else {
+			this.looserSound.play();
+
 			this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, 
 				"DAMAGE \n" + this.yourName, 
 				{
@@ -28,6 +43,7 @@ export default class EndScene extends Phaser.Scene {
 					fontFamily: 'myFont', 
 					fontSize: 24 
 				});
+		}
 
 		new Button(this, this.cameras.main.centerX, this.cameras.main.centerY + 120, 'buttons', 0, 1, 2)
 		.on('pointerup', this.onPressed, this);
@@ -40,6 +56,7 @@ export default class EndScene extends Phaser.Scene {
 	}
 
 	onPressed() {
+		this.clickSound.play();
 		this.scene.start('GameScene', { name: this.yourName });
 	}
 }
