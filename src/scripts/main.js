@@ -8,9 +8,7 @@ import EndScene from './end_scene';
 const config = {
 	type : Phaser.AUTO,
 	scale : {
-		mode : Phaser.Scale.FIT,
-		parent: 'phaser-example',
-		autoCenter : Phaser.Scale.CENTER_BOTH,
+		parent: 'phaser-app',
 		width : 328,
 		height : 600
 	},
@@ -22,7 +20,7 @@ const config = {
             key: 'rexInputTextPlugin',
             plugin: InputTextPlugin,
             start: true
-        }]
+        }],
     }, 
 	physics : {
 		default : 'arcade',

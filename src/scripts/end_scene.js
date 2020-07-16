@@ -26,8 +26,8 @@ export default class EndScene extends Phaser.Scene {
 
 			this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, 
 				"BRAVO \n" + this.yourName, 
-				{ 
-					align: 'center', 
+				{
+					align: 'center',
 					fontFamily: 'myFont', 
 					fontSize: 24 
 				});
@@ -39,13 +39,15 @@ export default class EndScene extends Phaser.Scene {
 			this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, 
 				"DAMAGE \n" + this.yourName, 
 				{
-					align: 'center', 
+					align: 'center',
 					fontFamily: 'myFont', 
 					fontSize: 24 
 				});
 		}
 
+		/* Button and label are in a container to get the text centered */
 		const button = new Button(this, 0, 0, 'buttons', 0, 1, 2).on('pointerup', this.onPressed, this);
+
 		const label = this.add.text(0, 0, "RETRY",
 		{
 			fontFamily: 'myFont', 
@@ -55,6 +57,7 @@ export default class EndScene extends Phaser.Scene {
 		const container = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
 	}
 
+	/* Stop the sound if player click before the end. Retry the game keeping the player's name */
 	onPressed() {
 		this.WINNER ? this.winnerSound.stop() : this.looserSound.stop();
 		this.clickSound.play();

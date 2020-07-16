@@ -6,8 +6,23 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<style>
 			body {
-				height: 100%; margin: 0px; padding: 0px; overflow: hidden;
+				background-color: black;
+				margin: 0; 
+				overflow: hidden;
 			}
+
+			#phaser-app {
+				margin: 0 auto;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+
+			canvas {
+				width: 100%;
+				height: 100%;
+			}
+
 			@font-face {
 				font-family: myFont;
 				src: url('assets/Font/VT323-Regular.ttf');
@@ -18,6 +33,8 @@
 	</head>
 	<body>
 		<div style="font-family: 'myFont'; position: absolute; left: -1000px; visibility: hidden;">.</div>
+		<div id="phaser-app">
 		<script src="./dist/main.js"></script>
+		</div>
 	</body>
 </html>

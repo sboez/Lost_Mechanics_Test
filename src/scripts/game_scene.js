@@ -8,6 +8,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.image('ball', 'assets/Game/ball.png');
 		this.load.image('paddle', 'assets/Game/baton.png');
 		this.load.image('brick', 'assets/Game/brique-bleu.png');
+
 		this.load.audio('hit', [ "assets/Sounds/Hit.mp3" ]);
 		this.load.audio('shoot', [ "assets/Sounds/Shoot.mp3" ]);
 		this.load.audio('dead', [ "assets/Sounds/Explosion.mp3" ]);
@@ -18,10 +19,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.hitSound = this.sound.add('hit');
-		this.shootSound = this.sound.add('shoot');
-		this.deadSound = this.sound.add('dead');
-
+		/* Reset variables when the game is retry */ 
 		this.START = false;
 		this.TAP = false;
 		this.WINNER = false;
@@ -29,10 +27,15 @@ export default class GameScene extends Phaser.Scene {
 		this.score = 0;
 		this.lives = 3;
 
+		this.hitSound = this.sound.add('hit');
+		this.shootSound = this.sound.add('shoot');
+		this.deadSound = this.sound.add('dead');
+
 		this.add.image(0, 0, 'background').setOrigin(0).setScale(0.3);
+
+		this.setBricks();
 		this.setPlayer();
 		this.setBall();
-		this.setBricks();
 
 		this.physics.world.checkCollision.down = false;
 		this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
@@ -42,6 +45,7 @@ export default class GameScene extends Phaser.Scene {
 		this.setText();
 	}
 
+	/* Set 42 bricks. 7 columns, 6 lines */
 	setBricks() {
 		this.bricks = this.physics.add.group({
 			immovable: true
@@ -92,34 +96,14 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setText() {
-		this.scoreText = this.add.text(60, 16, 'Score: 0', 
-			{ 
-				align: 'center', 
-				fontFamily: 'myFont', 
-				fontSize: '24px', 
-				fill: '#000' 
-			});
+		const style = { fontFamily: 'myFont', fontSize: '24px', fill: '#000' };
 
-		this.livesText = this.add.text(180, 16, 'Lives: 3', 
-			{ 
-				align: 'center', 
-				fontFamily: 'myFont', 
-				fontSize: '24px', 
-				fill: '#000' 
-			});
+		this.scoreText = this.add.text(60, 16, 'Score: 0', style);
 
-		this.startText = this.add.text(
-			this.physics.world.bounds.width / 2,
-			this.physics.world.bounds.height / 2,
-			'Press SPACE or TAP to Start',
-			{
-				align: 'center', 
-				fontFamily: 'myFont',
-				fontSize: '24px',
-				fill: '#000'
-			})
-		.setOrigin(0.5);
+		this.livesText = this.add.text(180, 16, 'Lives: 3', style); 
 
+		this.startText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,
+			'Press SPACE or TAP to Start', style).setOrigin(0.5);
 	}
 
 	/* Hide brick after collision, a brick give 20 score pts */
@@ -132,7 +116,7 @@ export default class GameScene extends Phaser.Scene {
 		this.scoreText.setText('Score: ' + this.score);
 	}
 
-	/* Set reverse ball direction compared to player */
+	/* Set reverse ball direction compared to the player */
 	hitPlayer(ball, player) {
 		this.shootSound.play();
 
@@ -151,8 +135,8 @@ export default class GameScene extends Phaser.Scene {
 		else this.ball.setVelocityX(2 + Math.random() * 8);
 	}
 
-	isGameOver(world) {
-		return this.ball.body.y > world.bounds.height;
+	isGameOver() {
+		return this.ball.body.y > this.physics.world.bounds.height;
 	}
 
 	isWon() {
@@ -183,6 +167,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	update() {
+		/* Arrow keys */
 		this.player.body.setVelocityX(0);
 
 		if (this.cursors.left.isDown) this.player.body.setVelocityX(-500);

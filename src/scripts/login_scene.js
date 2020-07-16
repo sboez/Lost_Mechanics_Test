@@ -10,21 +10,20 @@ export default class LoginScene extends Phaser.Scene {
 
 		this.add.text(30, 200, "Please put your name to play",
 			{ 
-				align: 'center', 
-				fontFamily: 'myFont', 
+				fontFamily: 'myFont',
 				fontSize: 24
 			});
 
-		this.inputText = this.add.rexInputText(this.cameras.main.centerX, this.cameras.main.centerY, 10, 10, {
+		this.inputText = this.add.rexInputText(this.cameras.main.centerX + 20, this.cameras.main.centerY, 200, 40, {
 			type: 'textarea',
 			text: '',
+			align: 'center',
 			placeholder: 'name',
 			fontSize: '22px',
 			border: 1,
 			borderColor: '#fff',
 			backgroundColor: '#888E8E'
 		})
-		.resize(200, 40)
 		.selectText()
 		.setBlur()
 		.on('textchange', inputText => {
@@ -33,7 +32,9 @@ export default class LoginScene extends Phaser.Scene {
 
 		this.yourName = this.inputText.text;
 
+		/* Button and label are in a container to get the text centered */
 		const button = new Button(this, 0, 0, 'buttons', 0, 1, 2).on('pointerup', this.checkName, this);
+		
 		const label = this.add.text(0, 0, "OK",
 		{
 			fontFamily: 'myFont', 
@@ -43,6 +44,7 @@ export default class LoginScene extends Phaser.Scene {
 		const container = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
 	}
 
+	/* Can't validate the name if it's empty */
 	checkName() {
 		this.clickSound.play();
 		this.inputText.text === '' ? alert("Your name can't be empty") : this.scene.start('GameScene', { name: this.yourName });
