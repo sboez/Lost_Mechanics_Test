@@ -6,19 +6,18 @@ export default class LoginScene extends Phaser.Scene {
 	}
 
 	create() {
+		const style = { fontFamily: 'myFont', fontSize: 24 };
+
 		this.clickSound = this.sound.add('soundMenu');
 
-		this.add.text(30, 200, "Please put your name to play",
-			{ 
-				fontFamily: 'myFont',
-				fontSize: 24
-			});
+		this.add.text(30, 200, "Please put your name to play", style);
 
 		this.inputText = this.add.rexInputText(this.cameras.main.centerX + 20, this.cameras.main.centerY, 200, 40, {
 			type: 'textarea',
 			text: '',
 			align: 'center',
 			placeholder: 'name',
+			fontFamily: 'myFont',
 			fontSize: '22px',
 			border: 1,
 			borderColor: '#fff',
@@ -35,18 +34,17 @@ export default class LoginScene extends Phaser.Scene {
 		/* Button and label are in a container to get the text centered */
 		const button = new Button(this, 0, 0, 'buttons', 0, 1, 2).on('pointerup', this.checkName, this);
 		
-		const label = this.add.text(0, 0, "OK",
-		{
-			fontFamily: 'myFont', 
-			fontSize: 24
-		}).setOrigin(0.5);
+		const label = this.add.text(0, 0, "OK", style).setOrigin(0.5);
 
 		const container = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
 	}
 
-	/* Can't validate the name if it's empty */
+	/* Can't validate the name if it's empty, contains space or is inferior to 3 characters */
 	checkName() {
 		this.clickSound.play();
-		this.inputText.text === '' ? alert("Your name can't be empty") : this.scene.start('GameScene', { name: this.yourName });
+
+		if (this.inputText.text === '' || this.inputText.text.length < 3 || /\s/.test(this.inputText.text))
+			alert("Your name is invalid");
+		else this.scene.start('GameScene', { name: this.yourName });
 	}
 }

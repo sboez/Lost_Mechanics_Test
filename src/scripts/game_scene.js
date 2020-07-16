@@ -19,7 +19,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		/* Reset variables when the game is retry */ 
+		/* Reset variables when the game restarts */ 
 		this.START = false;
 		this.TAP = false;
 		this.WINNER = false;
@@ -59,8 +59,9 @@ export default class GameScene extends Phaser.Scene {
 		}
 	}
 
+	/* Set paddle sprite and add collider */
 	setPlayer() {
-		this.player = this.physics.add.sprite(400, 500, 'paddle');
+		this.player = this.physics.add.sprite(this.cameras.main.centerX, 500, 'paddle');
 		this.player.displayWidth = 70;
 		this.player.displayHeight = 10;
 
@@ -68,8 +69,9 @@ export default class GameScene extends Phaser.Scene {
 		this.player.setImmovable(true);
 	}
 
+	/* Set ball sprite and add collider, ball is 'attached' to the paddle */
 	setBall() {
-		this.ball = this.physics.add.sprite(400, 480, 'ball');
+		this.ball = this.physics.add.sprite(this.player.x, 480, 'ball');
 		this.ball.displayWidth = 12;
 		this.ball.displayHeight = 12;
 
@@ -78,6 +80,7 @@ export default class GameScene extends Phaser.Scene {
 		this.ball.setData('onPlayer', true);
 	}
 
+	/* Set move controls, the game start when the pointerdown is called */
 	setControls() {
 		this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -90,7 +93,7 @@ export default class GameScene extends Phaser.Scene {
 			if (this.ball.getData('onPlayer')) this.ball.x = this.player.x;
 		}, this);
 
-		this.input.on('pointerup', pointer => {
+		this.input.on('pointerdown', pointer => {
 			if (this.ball.getData('onPlayer')) this.TAP = true;
 		}, this);
 	}
@@ -104,6 +107,15 @@ export default class GameScene extends Phaser.Scene {
 
 		this.startText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,
 			'Press SPACE or TAP to Start', style).setOrigin(0.5);
+
+		/* Start text infinite animation */
+		this.tweens.add({ 
+			targets: this.startText, 
+			alpha: { from: 0, to: 1 }, 
+			ease: 'Linear',
+			duration: 1000, 
+			repeat: -1 
+		});
 	}
 
 	/* Hide brick after collision, a brick give 20 score pts */
@@ -145,10 +157,11 @@ export default class GameScene extends Phaser.Scene {
 
 	resetBall() {
 		this.ball.setVelocity(0);
-		this.ball.setPosition(this.player.x, 480);
+		this.ball.setPosition(this.player.x, 475);
 		this.ball.setData('onPlayer', true);
 	}
 
+	/* Call when a life is lose, reset the ball */
 	reset() {
 		this.deadSound.play();
 		this.resetBall();
@@ -167,12 +180,6 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	update() {
-		/* Arrow keys */
-		this.player.body.setVelocityX(0);
-
-		if (this.cursors.left.isDown) this.player.body.setVelocityX(-500);
-		else if (this.cursors.right.isDown) this.player.body.setVelocityX(500);
-
 		if (!this.START) {
 			this.ball.setX(this.player.x);
 
