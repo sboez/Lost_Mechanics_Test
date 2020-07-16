@@ -13,14 +13,27 @@ Make a bricks breaker game level inspired by [this one](https://gaming.wimbledon
 
 ## Challenges
 
-**Phaser :** It's the first time I'm working with this framework. It was very fun, intuitive for the gameplay, most challenging for update variables because each scene is independent.
+:space_invader: **Phaser :** It's the first time I'm working with this framework. It was very fun, intuitive for the gameplay, most challenging for update variables because each scene is independent.
 
-**Mobile :** I had some trouble to find a way for fullscreen on mobile device. I followed [this method](http://browsergameshub.com/scale-html5-games-on-any-device/)
+:iphone: **Mobile :** I had some trouble to find a way for fullscreen on mobile device. I followed [this method](http://browsergameshub.com/scale-html5-games-on-any-device/)
 
 
 ## Assets
 
 :loud_sound: 8-Bit sounds were picked on [OpenGameArt](https://opengameart.org/)
+
+
+## Improvements / Features 
+
+List of some improvements I'd like to do for a personal breakout game :
+
+- Add animated title screen
+- Update input text for validate with enter key
+- Add difficulty levels
+- Add objects to collect
+- Update mobile device game size to see the bounce ball on the top
+- Add a scoreboard at the end
+- Update assets for a cyberbunk style
 
 
 ## Usage
