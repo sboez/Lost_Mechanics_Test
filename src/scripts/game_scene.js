@@ -60,7 +60,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setPlayer() {
-		this.player = this.physics.add.sprite(400, 550, 'paddle');
+		this.player = this.physics.add.sprite(400, 500, 'paddle');
 		this.player.displayWidth = 70;
 		this.player.displayHeight = 10;
 
@@ -69,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	setBall() {
-		this.ball = this.physics.add.sprite(400, 520, 'ball');
+		this.ball = this.physics.add.sprite(400, 480, 'ball');
 		this.ball.displayWidth = 12;
 		this.ball.displayHeight = 12;
 
@@ -98,9 +98,9 @@ export default class GameScene extends Phaser.Scene {
 	setText() {
 		const style = { fontFamily: 'myFont', fontSize: '24px', fill: '#000' };
 
-		this.scoreText = this.add.text(60, 16, 'Score: 0', style);
+		this.scoreText = this.add.text(70, 35, 'Score: 0', style);
 
-		this.livesText = this.add.text(180, 16, 'Lives: 3', style); 
+		this.livesText = this.add.text(190, 35, 'Lives: 3', style); 
 
 		this.startText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,
 			'Press SPACE or TAP to Start', style).setOrigin(0.5);
@@ -145,7 +145,7 @@ export default class GameScene extends Phaser.Scene {
 
 	resetBall() {
 		this.ball.setVelocity(0);
-		this.ball.setPosition(this.player.x, 520);
+		this.ball.setPosition(this.player.x, 480);
 		this.ball.setData('onPlayer', true);
 	}
 

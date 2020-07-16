@@ -15,7 +15,7 @@ Make a bricks breaker game level inspired by [this one](https://gaming.wimbledon
 
 **Phaser :** It's the first time I'm working with this framework. It was very fun, intuitive for the gameplay, most challenging for update variables because each scene is independent.
 
-**Responsive :** I had some trouble to find a way for fullscreen on mobile device. I followed [this method](http://browsergameshub.com/scale-html5-games-on-any-device/)
+**Mobile :** I had some trouble to find a way for fullscreen on mobile device. I followed [this method](http://browsergameshub.com/scale-html5-games-on-any-device/)
 
 
 ## Assets
@@ -35,8 +35,9 @@ Run local server :
 npm start
 ```
 
-
 Build for deployment :
 ```
 npm run build
 ```
+
+[My deployed version](https://lostmechanics-technicaltest.web.app)

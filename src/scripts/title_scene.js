@@ -8,7 +8,7 @@ export default class TitleScene extends Phaser.Scene {
 	preload() {
 		this.load.image('logo', 'assets/Game/logo.png');
 		this.load.image('trophy', 'assets/Game/trophee.png');
-		this.load.spritesheet('buttons', "assets/Game/spritesheet.png", { frameWidth: 115, frameHeight: 42 });
+		this.load.spritesheet('buttons', "assets/Game/buttons_spritesheet.png", { frameWidth: 115, frameHeight: 42 });
 		this.load.audio('soundMenu', [ "assets/Sounds/Menu_Navigate.mp3" ]);
 	}
 
