@@ -4,7 +4,7 @@
   "main": "main.js",
   "scripts": {
     "start": "webpack-dev-server --watch --open",
-    "build": "webpack"
+    "build": "webpack --mode=production"
   },
   "repository": {
     "type": "git",

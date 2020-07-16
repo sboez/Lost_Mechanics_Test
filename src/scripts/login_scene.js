@@ -1,4 +1,4 @@
-import { Button } from './button';
+import Button from './button';
 
 export default class LoginScene extends Phaser.Scene {
 	constructor() {
@@ -33,10 +33,9 @@ export default class LoginScene extends Phaser.Scene {
 
 		/* Button and label are in a container to get the text centered */
 		const button = new Button(this, 0, 0, 'buttons', 0, 1, 2).on('pointerup', this.checkName, this);
-		
 		const label = this.add.text(0, 0, "OK", style).setOrigin(0.5);
 
-		const container = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
+		this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
 	}
 
 	/* Can't validate the name if it's empty, contains space or is inferior to 3 characters */

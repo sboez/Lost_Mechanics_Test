@@ -1,4 +1,4 @@
-import { Button } from './button';
+import Button from './button';
 
 export default class TitleScene extends Phaser.Scene {
 	constructor() {
@@ -8,7 +8,9 @@ export default class TitleScene extends Phaser.Scene {
 	preload() {
 		this.load.image('logo', 'assets/Game/logo.png');
 		this.load.image('trophy', 'assets/Game/trophee.png');
+
 		this.load.spritesheet('buttons', "assets/Game/buttons_spritesheet.png", { frameWidth: 115, frameHeight: 42 });
+
 		this.load.audio('soundMenu', [ "assets/Sounds/Menu_Navigate.mp3" ]);
 	}
 
@@ -19,8 +21,9 @@ export default class TitleScene extends Phaser.Scene {
 		this.clickSound = this.sound.add('soundMenu');
 
 		this.add.image(this.cameras.main.centerX, 180, 'logo');
-		const trophy = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'trophy').setScale(.4);
+		this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'trophy').setScale(.4);
 
+		/* Button and label are in a container to get the text centered */
 		const button = new Button(this, 0, 0, 'buttons', 0, 1, 2).on('pointerup', this.onPressed, this);
 		const label = this.add.text(0, 0, "START",
 		{
@@ -28,7 +31,7 @@ export default class TitleScene extends Phaser.Scene {
 			fontSize: 24
 		}).setOrigin(0.5);
 
-		const container = this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
+		this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
 	}
 
 	onPressed() {
@@ -36,7 +39,7 @@ export default class TitleScene extends Phaser.Scene {
 		this.scene.start('LoginScene');
 	}
 
-	resizeApp () {
+	resizeApp() {
 		const game_ratio = 328 / 640;
 
 		/* Make div full height of browser and keep the ratio of game resolution */

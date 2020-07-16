@@ -1,4 +1,4 @@
-export class Button extends Phaser.GameObjects.Sprite {
+export default class Button extends Phaser.GameObjects.Sprite {
 	constructor(_scene, _x, _y, _img, _upFrame, _downFrame, _overFrame) {
 		super(_scene, _x, _y, _img, _upFrame);
 

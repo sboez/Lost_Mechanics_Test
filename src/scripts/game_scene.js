@@ -14,6 +14,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.audio('dead', [ "assets/Sounds/Explosion.mp3" ]);
 	}
 
+	/* Get yourName value from LoginScene */
 	init(data) {
 		this.yourName = data.name;
 	}
@@ -59,7 +60,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 	}
 
-	/* Set paddle sprite and add collider */
+	/* Set the paddle sprite and add collider */
 	setPlayer() {
 		this.player = this.physics.add.sprite(this.cameras.main.centerX, 500, 'paddle');
 		this.player.displayWidth = 70;
@@ -69,7 +70,7 @@ export default class GameScene extends Phaser.Scene {
 		this.player.setImmovable(true);
 	}
 
-	/* Set ball sprite and add collider, ball is 'attached' to the paddle */
+	/* Set the ball sprite and add collider, the ball is 'attached' to the paddle */
 	setBall() {
 		this.ball = this.physics.add.sprite(this.player.x, 480, 'ball');
 		this.ball.displayWidth = 12;
@@ -80,7 +81,7 @@ export default class GameScene extends Phaser.Scene {
 		this.ball.setData('onPlayer', true);
 	}
 
-	/* Set move controls, the game start when the pointerdown is called */
+	/* Set controls, the ball follow the paddle, the game start when the pointerdown is called */
 	setControls() {
 		this.cursors = this.input.keyboard.createCursorKeys();
 
