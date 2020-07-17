@@ -23,7 +23,7 @@ const config = {
             plugin: InputTextPlugin,
             start: true
         }],
-    }, 
+    },
 	physics: {
 		default: 'arcade',
 		arcade: {
@@ -38,4 +38,4 @@ const config = {
 	],
 };
 
-const game = new Phaser.Game(config)
+const game = new Phaser.Game(config);

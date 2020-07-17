@@ -23,6 +23,9 @@ export default class TitleScene extends Phaser.Scene {
 
 		this.clickSound = this.sound.add('soundMenu');
 
+		/* Sounds will be not paused when game looses focus */
+		this.sound.pauseOnBlur = false;
+
 		this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'logo');
 		this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'trophy').setScale(.4);
 
