@@ -6,11 +6,13 @@ import GameScene from './game_scene';
 import EndScene from './end_scene';
 
 const config = {
-	type : Phaser.AUTO,
-	scale : {
+	type: Phaser.AUTO,
+	scale: {
 		parent: 'phaser-app',
-		width : 328,
-		height : 600
+		mode: Phaser.Scale.FIT,
+		autoCenter: Phaser.Scale.CENTER_BOTH,
+		width: 328,
+		height: 600
 	},
 	dom: {
         createContainer: true
@@ -22,13 +24,13 @@ const config = {
             start: true
         }],
     }, 
-	physics : {
-		default : 'arcade',
-		arcade : {
-			gravity : false
+	physics: {
+		default: 'arcade',
+		arcade: {
+			gravity: false
 		},
 	},
-	scene : [
+	scene: [
 		TitleScene,
 		LoginScene,
 		GameScene,
@@ -36,4 +38,4 @@ const config = {
 	],
 };
 
-const game = new Phaser.Game(config);
+const game = new Phaser.Game(config)

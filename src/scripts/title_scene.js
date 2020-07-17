@@ -14,13 +14,16 @@ export default class TitleScene extends Phaser.Scene {
 		this.load.audio('soundMenu', [ "assets/Sounds/Menu_Navigate.mp3" ]);
 	}
 
-	create(config) {
-		/* Check if it's desktop or mobile device. With mobile device the game is fullscreen */
-		if (this.sys.game.device.os.desktop) this.resizeApp();
+	create() {
+		/* With mobile device the game should be fullscreen */
+		if (!this.sys.game.device.os.desktop) {
+			this.scale.scaleMode = Phaser.Scale.ScaleModes.NONE;
+			this.scale.refresh();
+		}
 
 		this.clickSound = this.sound.add('soundMenu');
 
-		this.add.image(this.cameras.main.centerX, 180, 'logo');
+		this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'logo');
 		this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'trophy').setScale(.4);
 
 		/* Button and label are in a container to get the text centered */
@@ -37,26 +40,5 @@ export default class TitleScene extends Phaser.Scene {
 	onPressed() {
 		this.clickSound.play();
 		this.scene.start('LoginScene');
-	}
-
-	resizeApp() {
-		const game_ratio = 328 / 640;
-
-		/* Make div full height of browser and keep the ratio of game resolution */
-		const div = document.getElementById('phaser-app');
-		div.style.width = (window.innerHeight * game_ratio) + 'px';
-		div.style.height = window.innerHeight + 'px';
-
-		/* Check if device DPI messes up the width-height-ratio */
-		const canvas = document.getElementsByTagName('canvas')[0];
-
-		const dpi_w = parseInt(div.style.width) / canvas.width;
-		const dpi_h = parseInt(div.style.height) / canvas.height;		
-
-		const height = window.innerHeight * (dpi_w / dpi_h);
-		const width = height * game_ratio;
-
-		canvas.style.width = width + 'px';
-		canvas.style.height	= height + 'px';
 	}
 }

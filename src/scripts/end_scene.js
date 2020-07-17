@@ -25,25 +25,25 @@ export default class EndScene extends Phaser.Scene {
 		if (this.WINNER) {
 			this.winnerSound.play();
 
-			this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, 
+			this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 50, 
 				"BRAVO \n" + this.yourName, 
 				{
 					align: 'center',
 					fontFamily: 'myFont', 
 					fontSize: 24 
-				});
+				}).setOrigin(0.5);
 		}
 
 		else {
 			this.looserSound.play();
 
-			this.add.text(this.cameras.main.centerX - 20, this.cameras.main.centerY - 50, 
+			this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 50, 
 				"DAMAGE \n" + this.yourName, 
 				{
 					align: 'center',
 					fontFamily: 'myFont', 
 					fontSize: 24 
-				});
+				}).setOrigin(0.5);
 		}
 
 		/* Button and label are in a container to get the text centered */

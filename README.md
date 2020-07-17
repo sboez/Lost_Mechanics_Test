@@ -15,7 +15,7 @@ Make a bricks breaker game level inspired by [this one](https://gaming.wimbledon
 
 :space_invader: **Phaser :** It's the first time I'm working with this framework. It was very fun, intuitive for the gameplay, most challenging for update variables because each scene is independent.
 
-:iphone: **Mobile :** I had some trouble to find a way for fullscreen on mobile device. I followed [this method](http://browsergameshub.com/scale-html5-games-on-any-device/)
+:iphone: **Mobile :** I had some trouble to find a way for fullscreen on mobile device, I have side borders and I couldn't find a good method.
 
 
 ## Assets
@@ -25,7 +25,7 @@ Make a bricks breaker game level inspired by [this one](https://gaming.wimbledon
 
 ## Improvements / Features 
 
-List of some improvements I'd like to do for a personal breakout game :
+List of some improvements I'd like to do for my personal breakout game :
 
 - Add animated title screen
 - Update input text for validate with enter key

@@ -10,9 +10,9 @@ export default class LoginScene extends Phaser.Scene {
 
 		this.clickSound = this.sound.add('soundMenu');
 
-		this.add.text(30, 200, "Please put your name to play", style);
+		this.add.text(30, this.cameras.main.centerY - 130, "Please put your name to play", style);
 
-		this.inputText = this.add.rexInputText(this.cameras.main.centerX + 20, this.cameras.main.centerY, 200, 40, {
+		this.inputText = this.add.rexInputText(this.cameras.main.centerX, this.cameras.main.centerY, 200, 40, {
 			type: 'textarea',
 			text: '',
 			align: 'center',

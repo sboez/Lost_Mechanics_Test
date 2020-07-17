@@ -15,19 +15,19 @@ export default class Button extends Phaser.GameObjects.Sprite {
 		_scene.add.existing(this);
 	}
 
-	pointerUp(pointer) {
+	pointerUp() {
 		this.setFrame(this.upFrame);
 	}
 
-	pointerDown(pointer) {
+	pointerDown() {
 		this.setFrame(this.downFrame);
 	}
 
-	pointerOver(pointer) {
+	pointerOver() {
 		this.setFrame(this.overFrame);
 	}
 
-	pointerOut(pointer) {
+	pointerOut() {
 		this.setFrame(this.upFrame);
 	}
 }
