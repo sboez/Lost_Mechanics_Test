@@ -38,12 +38,13 @@ export default class LoginScene extends Phaser.Scene {
 		this.add.container(this.cameras.main.centerX, this.cameras.main.centerY + 120, [button, label]);
 	}
 
-	/* Can't validate the name if it's empty, contains space or is inferior to 3 characters */
+	/* Can't validate the name if it's empty, contains space, is inferior to 3 or is superior to 9 characters */
 	checkName() {
 		this.clickSound.play();
 
 		if (this.inputText.text === '' || this.inputText.text.length < 3 || /\s/.test(this.inputText.text))
-			alert("Your name is invalid");
+			alert("Sorry, your name is invalid");
+		else if (this.inputText.text.length > 9) alert("Sorry, your name is too big");
 		else this.scene.start('GameScene', { name: this.yourName });
 	}
 }
